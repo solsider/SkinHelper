@@ -1,7 +1,7 @@
 from telebot import types
 from keyboards import step_keyboard, main_menu_keyboard
 
-
+MAX_LEN = 3800  # запас до лимита Telegram 4096
 
 
 def _build_step_text(step_name: str, items: list[dict], step_index: int, total_steps: int) -> str:
@@ -11,13 +11,21 @@ def _build_step_text(step_name: str, items: list[dict], step_index: int, total_s
         "",
     ]
     for i, p in enumerate(items, start=1):
-        lines.append(f"{i}) {p['name']}")
-        why = p.get("why", "")
+        name = p.get("name", "—")
+        lines.append(f"{i}) {name}")
+
+        why = (p.get("why") or "").strip()
         if why:
+            # коротко, чтобы не улететь за лимит
+            if len(why) > 180:
+                why = why[:177] + "…"
             lines.append(f"_{why}_")
         lines.append("")
-    return "\n".join(lines).strip()
 
+    text = "\n".join(lines).strip()
+    if len(text) > MAX_LEN:
+        text = text[:MAX_LEN - 1] + "…"
+    return text
 
 
 def register(bot, user_data: dict):
@@ -25,23 +33,23 @@ def register(bot, user_data: dict):
     @bot.callback_query_handler(func=lambda call: (call.data or "").startswith("nav:"))
     def nav(call):
         chat_id = call.message.chat.id
-        data = call.data
+        data = call.data or ""
 
-        # если нет состояния — просто уберём "loading"
+        # быстро убираем "часики"
+        bot.answer_callback_query(call.id)
+
+        # нет состояния — нечего листать
         if chat_id not in user_data or "pager" not in user_data[chat_id]:
-            bot.answer_callback_query(call.id)
             return
 
         pager = user_data[chat_id]["pager"]
-        steps = pager.get("steps", [])
+        steps = pager.get("steps") or []
         if not steps:
-            bot.answer_callback_query(call.id)
             return
 
-        idx = pager.get("index", 0)
+        idx = int(pager.get("index", 0))
 
         if data == "nav:none":
-            bot.answer_callback_query(call.id)
             return
 
         if data == "nav:prev":
@@ -51,12 +59,7 @@ def register(bot, user_data: dict):
             idx = min(len(steps) - 1, idx + 1)
 
         elif data == "nav:done":
-            bot.answer_callback_query(call.id, "Готово ✅")
-
-            # ❗ Полный выход из всех состояний
             user_data[chat_id].pop("pager", None)
-            user_data[chat_id].pop("state", None)
-
             bot.send_message(
                 chat_id,
                 "✅ Подбор завершён. Что делаем дальше?",
@@ -65,10 +68,7 @@ def register(bot, user_data: dict):
             return
 
         elif data == "nav:menu":
-            bot.answer_callback_query(call.id, "Главное меню")
             user_data[chat_id].pop("pager", None)
-            user_data[chat_id].pop("state", None)
-
             bot.send_message(
                 chat_id,
                 "🏠 Главное меню",
@@ -77,13 +77,10 @@ def register(bot, user_data: dict):
             return
 
         elif data == "nav:restart":
-            bot.answer_callback_query(call.id, "Ок, начнём заново")
             user_data[chat_id].pop("pager", None)
-
-            # можно сразу отправить выбор типа кожи, а можно меню
             bot.send_message(
                 chat_id,
-                "Ок 🙂 Выбери действие:",
+                "Давай заново 🙂 Нажми «🧴 Подобрать уход»",
                 reply_markup=main_menu_keyboard()
             )
             return
@@ -94,17 +91,31 @@ def register(bot, user_data: dict):
         text = _build_step_text(step_name, items, idx, len(steps))
         kb = step_keyboard(items, idx, len(steps))
 
-        # редактируем одно и то же сообщение
+        # ВАЖНО: редактируем именно то сообщение, где нажали кнопку
+        msg_id = call.message.message_id
+
         try:
             bot.edit_message_text(
                 text,
                 chat_id=chat_id,
-                message_id=call.message.message_id,
+                message_id=msg_id,
                 parse_mode="Markdown",
                 reply_markup=kb
             )
-        except Exception:
-            # если редактирование не удалось (редко), просто отправим новое
-            bot.send_message(chat_id, text, parse_mode="Markdown", reply_markup=kb)
+            pager["message_id"] = msg_id
 
-        bot.answer_callback_query(call.id)
+        except Exception:
+            # если редактировать нельзя — отправляем новое сообщение
+            sent = bot.send_message(
+                chat_id,
+                text,
+                parse_mode="Markdown",
+                reply_markup=kb
+            )
+            pager["message_id"] = sent.message_id
+
+            # и отключаем кнопки у старого, чтобы не кликали "мертвое"
+            try:
+                bot.edit_message_reply_markup(chat_id=chat_id, message_id=msg_id, reply_markup=None)
+            except Exception:
+                pass
