@@ -124,9 +124,9 @@ def main_menu_keyboard():
     kb = types.ReplyKeyboardMarkup(resize_keyboard=True)
     kb.row("🧴 Подобрать уход")
     kb.row("👤 Мой профиль", "🔄 Изменить профиль")
-    kb.row("💎 PRO")   # ← ОБЯЗАТЕЛЬНО
-    kb.row("ℹ️ О боте")
+    kb.row("💎 PRO", "ℹ️ О боте")
     return kb
+
 
 
 

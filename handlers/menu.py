@@ -95,10 +95,17 @@ def register(bot, user_data: dict):
         user_data[chat_id]["is_pro"] = True
         upsert_profile(chat_id, is_pro=True)
 
+        # ✅ важно: если человек был в рекомендациях — это пересчитает эффект PRO
+        user_data[chat_id].pop("pager", None)
+        user_data[chat_id].pop("state", None)
+
         bot.answer_callback_query(call.id, "PRO включён ✅")
         bot.send_message(
             chat_id,
-            "✅ PRO активирован!\n\nТеперь подбор будет давать больше вариантов на шаг 👇",
+            "✅ PRO активирован!\n\n"
+            "Теперь я буду показывать *до 5 вариантов* на шаг.\n"
+            "Нажми «🧴 Подобрать уход» заново, чтобы пересчитать рекомендации.",
+            parse_mode="Markdown",
             reply_markup=main_menu_keyboard()
         )
 

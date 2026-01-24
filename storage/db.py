@@ -7,7 +7,6 @@ DB_PATH = Path(__file__).resolve().parent.parent / "bot.db"
 
 
 def _connect() -> sqlite3.Connection:
-    # Открываем соединение на каждую операцию — просто и потокобезопасно для telebot
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
@@ -28,10 +27,10 @@ def init_db() -> None:
         )
         """)
 
-        # миграция для старых БД (если таблица уже была без is_pro)
+        # миграция: если таблица была создана раньше без is_pro
         cols = [r["name"] for r in conn.execute("PRAGMA table_info(profiles)").fetchall()]
         if "is_pro" not in cols:
-            conn.execute("ALTER TABLE profiles ADD COLUMN is_pro INTEGER DEFAULT 0")
+            conn.execute("ALTER TABLE profiles ADD COLUMN is_pro INTEGER DEFAULT 0;")
 
         conn.commit()
 
@@ -46,7 +45,7 @@ def get_profile(chat_id: int) -> Optional[Dict[str, Any]]:
     if not row:
         return None
 
-    problems = set()
+    problems: Set[str] = set()
     if row["problems_json"]:
         try:
             problems = set(json.loads(row["problems_json"]))
@@ -57,7 +56,7 @@ def get_profile(chat_id: int) -> Optional[Dict[str, Any]]:
         "skin_type": row["skin_type"],
         "problems": problems,
         "budget": row["budget"],
-        "is_pro": bool(row["is_pro"] or 0),
+        "is_pro": bool(row["is_pro"])  # ✅ важно
     }
 
 
@@ -66,26 +65,32 @@ def upsert_profile(
     skin_type: Optional[str] = None,
     problems: Optional[Set[str]] = None,
     budget: Optional[str] = None,
-    is_pro: Optional[bool] = None,
+    is_pro: Optional[bool] = None
 ) -> None:
-    problems_json = None
-    if problems is not None:
-        problems_json = json.dumps(sorted(list(problems)), ensure_ascii=False)
+    existing = get_profile(chat_id) or {
+        "skin_type": None,
+        "problems": set(),
+        "budget": None,
+        "is_pro": False,
+    }
 
-    is_pro_int = None
-    if is_pro is not None:
-        is_pro_int = 1 if is_pro else 0
+    skin_type = skin_type if skin_type is not None else existing["skin_type"]
+    problems = problems if problems is not None else existing["problems"]
+    budget = budget if budget is not None else existing["budget"]
+    is_pro_val = int(is_pro) if is_pro is not None else int(existing["is_pro"])
+
+    problems_json = json.dumps(sorted(list(problems)), ensure_ascii=False)
 
     with _connect() as conn:
         conn.execute("""
         INSERT INTO profiles (chat_id, skin_type, problems_json, budget, is_pro)
-        VALUES (?, ?, ?, ?, COALESCE(?, 0))
+        VALUES (?, ?, ?, ?, ?)
         ON CONFLICT(chat_id) DO UPDATE SET
-            skin_type = COALESCE(excluded.skin_type, profiles.skin_type),
-            problems_json = COALESCE(excluded.problems_json, profiles.problems_json),
-            budget = COALESCE(excluded.budget, profiles.budget),
-            is_pro = COALESCE(excluded.is_pro, profiles.is_pro)
-        """, (chat_id, skin_type, problems_json, budget, is_pro_int))
+            skin_type=excluded.skin_type,
+            problems_json=excluded.problems_json,
+            budget=excluded.budget,
+            is_pro=excluded.is_pro
+        """, (chat_id, skin_type, problems_json, budget, is_pro_val))
         conn.commit()
 
 

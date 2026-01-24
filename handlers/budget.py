@@ -2,7 +2,7 @@ from telebot import types
 
 from services.recommender import pick_by_steps
 from keyboards import BUDGETS, step_keyboard, main_menu_keyboard
-from storage.db import upsert_profile
+from storage.db import upsert_profile, get_profile
 
 
 STEPS_ORDER = ["Очищение", "Актив", "Крем", "SPF"]
@@ -38,6 +38,10 @@ def register(bot, user_data: dict):
     @bot.message_handler(func=in_choose_budget)
     def handle_budget(message):
         chat_id = message.chat.id
+
+        profile = get_profile(chat_id)
+        if profile:
+            user_data[chat_id].update(profile)
 
         b = message.text.replace("Бюджет: ", "").strip()
         if b not in BUDGETS:
