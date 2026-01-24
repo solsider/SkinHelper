@@ -6,7 +6,8 @@ import telebot
 from config import TOKEN
 from storage.db import init_db
 
-from handlers import start, menu, skin, problems, budget, pager, profile, focus
+from handlers import start, skin, problems, budget, pager, profile, menu, faq
+
 
 # состояние пользователей (в памяти)
 user_data: dict = {}
@@ -47,14 +48,12 @@ def register_handlers() -> None:
     # регистрируем хендлеры (один раз!)
     start.register(bot, user_data)
     menu.register(bot, user_data)
+    faq.register(bot, user_data)
     skin.register(bot, user_data)
-
     budget.register(bot, user_data)
-    focus.register(bot, user_data)    # обработчик "акне/сухость/чувствительность"
     pager.register(bot, user_data)
-
     profile.register(bot, user_data)
-    problems.register(bot, user_data)  # router — последним (как у тебя)
+    problems.register(bot, user_data)
 
 
 def run_bot_forever() -> None:
