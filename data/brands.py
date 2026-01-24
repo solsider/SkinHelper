@@ -1,0 +1,15 @@
+POPULAR_BRANDS = {
+    "Bioderma",
+    "La Roche-Posay",
+    "Avène",
+    "Vichy",
+    "CeraVe",
+    "Uriage",
+    "SVR",
+    "MIXIT",
+    "DarDing",
+    "Nivea",
+    "Garnier",
+    "L'Oréal Paris",
+    "The Ordinary",
+}
