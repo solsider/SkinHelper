@@ -1,8 +1,12 @@
+# skin_bot/data/products.py
 
 PRODUCTS = [
     # -------------------- ОЧИЩЕНИЕ --------------------
     {
         "name": "CeraVe Foaming Cleanser (пенка/гель для умывания)",
+        "query": "CeraVe Foaming Cleanser",
+        "ga_id": "89810300001",
+        "slug": "foaming-cleanser",
         "brand": "CeraVe",
         "step": "Очищение",
         "skin": ["Жирная", "Комбинированная"],
@@ -12,6 +16,9 @@ PRODUCTS = [
     },
     {
         "name": "CeraVe Hydrating Cleanser (увлажняющее очищение)",
+        "query": "CeraVe Hydrating Cleanser",
+        "ga_id": "89810200002",
+        "slug": "hydrating-cleanser",
         "brand": "CeraVe",
         "step": "Очищение",
         "skin": ["Сухая", "Нормальная", "Чувствительная"],
@@ -21,6 +28,9 @@ PRODUCTS = [
     },
     {
         "name": "Bioderma Sensibio Gel Moussant",
+        "query": "Bioderma Sensibio gel moussant",
+        "ga_id": "89270300016",
+        "slug": "sensibio-mild-cleansing-foaming-gel",
         "brand": "Bioderma",
         "step": "Очищение",
         "skin": ["Чувствительная", "Нормальная", "Сухая"],
@@ -30,6 +40,9 @@ PRODUCTS = [
     },
     {
         "name": "Bioderma Sébium Gel Moussant",
+        "query": "Bioderma Sebium gel moussant",
+        "ga_id": "89270200005",
+        "slug": "sebium-purifying-cleansing-foaming-gel",
         "brand": "Bioderma",
         "step": "Очищение",
         "skin": ["Жирная", "Комбинированная"],
@@ -39,6 +52,7 @@ PRODUCTS = [
     },
     {
         "name": "La Roche-Posay Toleriane Dermo-Cleanser (молочко)",
+        "query": "La Roche-Posay Toleriane Dermo-Cleanser",
         "brand": "La Roche-Posay",
         "step": "Очищение",
         "skin": ["Чувствительная", "Сухая"],
@@ -48,6 +62,9 @@ PRODUCTS = [
     },
     {
         "name": "La Roche-Posay Effaclar Purifying Foaming Gel",
+        "query": "La Roche-Posay Effaclar Purifying Foaming Gel",
+        "ga_id": "89320200010",
+        "slug": "gel-mous",
         "brand": "La Roche-Posay",
         "step": "Очищение",
         "skin": ["Жирная", "Комбинированная"],
@@ -57,6 +74,9 @@ PRODUCTS = [
     },
     {
         "name": "Uriage Xémose Syndet Gentle Cleansing Cream",
+        "query": "Uriage Xemose Syndet",
+        "ga_id": "89140300010",
+        "slug": "xemose-syndet",
         "brand": "Uriage",
         "step": "Очищение",
         "skin": ["Сухая", "Чувствительная"],
@@ -66,6 +86,7 @@ PRODUCTS = [
     },
     {
         "name": "SVR Sensifine Gel Nettoyant",
+        "query": "SVR Sensifine Gel Nettoyant",
         "brand": "SVR",
         "step": "Очищение",
         "skin": ["Чувствительная", "Сухая", "Нормальная"],
@@ -75,6 +96,9 @@ PRODUCTS = [
     },
     {
         "name": "COSRX Low pH Good Morning Gel Cleanser",
+        "query": "COSRX Low pH Good Morning Gel Cleanser",
+        "ga_id": "97560200022",
+        "slug": "low-ph-good-morning-gel-cleanser",
         "brand": "COSRX",
         "step": "Очищение",
         "skin": ["Все"],
@@ -84,6 +108,7 @@ PRODUCTS = [
     },
     {
         "name": "Mixit Gentle Cleanser (мягкий гель для умывания)",
+        "query": "Mixit gentle cleanser",
         "brand": "Mixit",
         "step": "Очищение",
         "skin": ["Все"],
@@ -95,6 +120,7 @@ PRODUCTS = [
     # -------------------- АКТИВЫ (сыворотки/кислоты/ретиноиды) --------------------
     {
         "name": "The Ordinary Niacinamide 10% + Zinc 1%",
+        "query": "The Ordinary Niacinamide 10% Zinc 1%",
         "brand": "The Ordinary",
         "step": "Актив",
         "skin": ["Жирная", "Комбинированная", "Нормальная"],
@@ -104,6 +130,7 @@ PRODUCTS = [
     },
     {
         "name": "The Ordinary Azelaic Acid Suspension 10%",
+        "query": "The Ordinary Azelaic Acid Suspension 10%",
         "brand": "The Ordinary",
         "step": "Актив",
         "skin": ["Все"],
@@ -113,6 +140,7 @@ PRODUCTS = [
     },
     {
         "name": "Paula’s Choice Skin Perfecting 2% BHA Liquid (салициловая)",
+        "query": "Paula's Choice Skin Perfecting 2% BHA Liquid",
         "brand": "Paula's Choice",
         "step": "Актив",
         "skin": ["Жирная", "Комбинированная"],
@@ -123,6 +151,7 @@ PRODUCTS = [
     },
     {
         "name": "La Roche-Posay Effaclar Ultra Concentrated Serum",
+        "query": "La Roche-Posay Effaclar Ultra Concentrated Serum",
         "brand": "La Roche-Posay",
         "step": "Актив",
         "skin": ["Жирная", "Комбинированная"],
@@ -133,6 +162,7 @@ PRODUCTS = [
     },
     {
         "name": "SVR Sebiaclear Serum",
+        "query": "SVR Sebiaclear Serum",
         "brand": "SVR",
         "step": "Актив",
         "skin": ["Жирная", "Комбинированная"],
@@ -143,6 +173,7 @@ PRODUCTS = [
     },
     {
         "name": "COSRX The Vitamin C 23 Serum",
+        "query": "COSRX Vitamin C 23 Serum",
         "brand": "COSRX",
         "step": "Актив",
         "skin": ["Нормальная", "Комбинированная", "Сухая"],
@@ -153,6 +184,7 @@ PRODUCTS = [
     },
     {
         "name": "Medik8 Crystal Retinal 1 (ретиноид для новичков)",
+        "query": "Medik8 Crystal Retinal 1",
         "brand": "Medik8",
         "step": "Актив",
         "skin": ["Все"],
@@ -163,6 +195,7 @@ PRODUCTS = [
     },
     {
         "name": "Dr.Jart+ Cicapair Serum (успокаивающая сыворотка)",
+        "query": "Dr.Jart Cicapair Serum",
         "brand": "Dr.Jart+",
         "step": "Актив",
         "skin": ["Чувствительная", "Сухая", "Нормальная"],
@@ -175,6 +208,9 @@ PRODUCTS = [
     # -------------------- КРЕМ --------------------
     {
         "name": "CeraVe Moisturizing Cream",
+        "query": "CeraVe Moisturizing Cream",
+        "ga_id": "89810100005",
+        "slug": "moisturising",
         "brand": "CeraVe",
         "step": "Крем",
         "skin": ["Сухая", "Нормальная", "Чувствительная"],
@@ -184,6 +220,9 @@ PRODUCTS = [
     },
     {
         "name": "CeraVe Facial Moisturising Lotion PM",
+        "query": "CeraVe Facial Moisturising Lotion PM",
+        "ga_id": "89810200003",
+        "slug": "moisturising",
         "brand": "CeraVe",
         "step": "Крем",
         "skin": ["Нормальная", "Комбинированная", "Жирная"],
@@ -193,6 +232,9 @@ PRODUCTS = [
     },
     {
         "name": "Bioderma Atoderm Intensive Baume",
+        "query": "Bioderma Atoderm Intensive Baume",
+        "ga_id": "89270100002",
+        "slug": "atoderm-intensive-baume",
         "brand": "Bioderma",
         "step": "Крем",
         "skin": ["Сухая", "Чувствительная"],
@@ -202,6 +244,9 @@ PRODUCTS = [
     },
     {
         "name": "La Roche-Posay Cicaplast Baume B5+",
+        "query": "La Roche-Posay Cicaplast Baume B5+",
+        "ga_id": "19000126619",
+        "slug": "cicaplast-b5",
         "brand": "La Roche-Posay",
         "step": "Крем",
         "skin": ["Все"],
@@ -211,6 +256,9 @@ PRODUCTS = [
     },
     {
         "name": "Avène Cicalfate+ Restorative Protective Cream",
+        "query": "Avene Cicalfate+",
+        "ga_id": "89190600001",
+        "slug": "cicalfate",
         "brand": "Avène",
         "step": "Крем",
         "skin": ["Чувствительная", "Сухая", "Нормальная"],
@@ -220,6 +268,7 @@ PRODUCTS = [
     },
     {
         "name": "Uriage Bariéderm Cica-Cream",
+        "query": "Uriage Bariederm Cica Cream",
         "brand": "Uriage",
         "step": "Крем",
         "skin": ["Все"],
@@ -229,6 +278,7 @@ PRODUCTS = [
     },
     {
         "name": "Eucerin UreaRepair PLUS 5% Urea (крем/лосьон)",
+        "query": "Eucerin UreaRepair PLUS 5% Urea",
         "brand": "Eucerin",
         "step": "Крем",
         "skin": ["Сухая"],
@@ -238,6 +288,7 @@ PRODUCTS = [
     },
     {
         "name": "SVR Sebiaclear Mat + Pores",
+        "query": "SVR Sebiaclear Mat Pores",
         "brand": "SVR",
         "step": "Крем",
         "skin": ["Жирная", "Комбинированная"],
@@ -248,6 +299,7 @@ PRODUCTS = [
     },
     {
         "name": "Mixit Moisturizer (увлажняющий крем для лица)",
+        "query": "Mixit moisturizer крем для лица",
         "brand": "Mixit",
         "step": "Крем",
         "skin": ["Все"],
@@ -257,6 +309,7 @@ PRODUCTS = [
     },
     {
         "name": "Darling Face Cream (увлажняющий крем)",
+        "query": "Darling Face Cream",
         "brand": "Darling",
         "step": "Крем",
         "skin": ["Нормальная", "Сухая", "Комбинированная"],
@@ -269,6 +322,9 @@ PRODUCTS = [
     # -------------------- SPF --------------------
     {
         "name": "La Roche-Posay Anthelios UVMune 400 (флюид SPF50+)",
+        "query": "La Roche-Posay Anthelios UVMune 400 SPF50 fluid",
+        "ga_id": "19000237059",
+        "slug": "anthelios",
         "brand": "La Roche-Posay",
         "step": "SPF",
         "skin": ["Все"],
@@ -279,6 +335,9 @@ PRODUCTS = [
     },
     {
         "name": "Bioderma Photoderm Aquafluide SPF50+",
+        "query": "Bioderma Photoderm Aquafluide SPF50+",
+        "ga_id": "89270800006",
+        "slug": "photoderm-max-very-high-protection-aquafluid-spf50",
         "brand": "Bioderma",
         "step": "SPF",
         "skin": ["Все"],
@@ -288,6 +347,9 @@ PRODUCTS = [
     },
     {
         "name": "Eucerin Oil Control Sun Gel-Cream SPF50+",
+        "query": "Eucerin Oil Control Sun Gel-Cream SPF50+",
+        "ga_id": "19000162322",
+        "slug": "sun-protection",
         "brand": "Eucerin",
         "step": "SPF",
         "skin": ["Жирная", "Комбинированная"],
@@ -298,6 +360,7 @@ PRODUCTS = [
     },
     {
         "name": "Avène Very High Protection Fluid SPF50+",
+        "query": "Avene Very High Protection Fluid SPF50+",
         "brand": "Avène",
         "step": "SPF",
         "skin": ["Чувствительная", "Нормальная", "Сухая"],
@@ -307,6 +370,9 @@ PRODUCTS = [
     },
     {
         "name": "Uriage Bariésun Matifying Fluid SPF50+",
+        "query": "Uriage Bariesun Matifying Fluid SPF50+",
+        "ga_id": "89142100015",
+        "slug": "bariesun-mat-spf-50-fluid",
         "brand": "Uriage",
         "step": "SPF",
         "skin": ["Жирная", "Комбинированная"],
@@ -316,6 +382,7 @@ PRODUCTS = [
     },
     {
         "name": "Darling Screen-Me Spray SPF (вариант для обновления)",
+        "query": "Darling Screen-Me Spray SPF",
         "brand": "Darling",
         "step": "SPF",
         "skin": ["Все"],
@@ -329,6 +396,7 @@ PRODUCTS = [
     # Активы мягкие (не pro-only)
     {
         "name": "Азелаиновая сыворотка (мягкий вариант)",
+        "query": "Mixit азелаиновая сыворотка",
         "brand": "Mixit",
         "step": "Актив",
         "skin": ["Чувствительная", "Нормальная", "Комбинированная"],
@@ -338,6 +406,7 @@ PRODUCTS = [
     },
     {
         "name": "Ниацинамид сыворотка (базовый вариант)",
+        "query": "Mixit ниацинамид сыворотка",
         "brand": "Mixit",
         "step": "Актив",
         "skin": ["Жирная", "Комбинированная", "Нормальная"],
@@ -348,6 +417,7 @@ PRODUCTS = [
     # Очищение доп.
     {
         "name": "Гель для умывания для чувствительной кожи (бюджет)",
+        "query": "Mixit гель для умывания чувствительная кожа",
         "brand": "Mixit",
         "step": "Очищение",
         "skin": ["Чувствительная"],
@@ -358,6 +428,7 @@ PRODUCTS = [
     # Кремы доп.
     {
         "name": "Увлажняющий крем-гель (лёгкий)",
+        "query": "Mixit увлажняющий крем-гель",
         "brand": "Mixit",
         "step": "Крем",
         "skin": ["Жирная", "Комбинированная"],
@@ -367,6 +438,9 @@ PRODUCTS = [
     },
     {
         "name": "COSRX Advanced Snail 92 All In One Cream",
+        "query": "COSRX Advanced Snail 92 All In One Cream",
+        "ga_id": "97560200015",
+        "slug": "advanced-snail-92-all-in-one-cream",
         "brand": "COSRX",
         "step": "Крем",
         "skin": ["Все"],
@@ -377,6 +451,7 @@ PRODUCTS = [
     # SPF доп.
     {
         "name": "SPF50+ для чувствительной кожи (базовый)",
+        "query": "Bioderma SPF50 чувствительная кожа",
         "brand": "Bioderma",
         "step": "SPF",
         "skin": ["Чувствительная"],
@@ -386,6 +461,7 @@ PRODUCTS = [
     },
     {
         "name": "SPF50 для ежедневного использования (бюджет)",
+        "query": "Mixit SPF50",
         "brand": "Mixit",
         "step": "SPF",
         "skin": ["Все"],
@@ -397,6 +473,7 @@ PRODUCTS = [
     # -------------------- PRO-ТОВАРЫ (усиление базы для PRO) --------------------
     {
         "name": "Paula’s Choice 10% Azelaic Acid Booster",
+        "query": "Paula's Choice 10% Azelaic Acid Booster",
         "brand": "Paula's Choice",
         "step": "Актив",
         "skin": ["Все"],
@@ -407,6 +484,7 @@ PRODUCTS = [
     },
     {
         "name": "Medik8 C-Tetra (витамин C)",
+        "query": "Medik8 C-Tetra",
         "brand": "Medik8",
         "step": "Актив",
         "skin": ["Нормальная", "Сухая", "Комбинированная"],
@@ -417,6 +495,7 @@ PRODUCTS = [
     },
     {
         "name": "Dr.Jart+ Ceramidin Cream",
+        "query": "Dr.Jart Ceramidin Cream",
         "brand": "Dr.Jart+",
         "step": "Крем",
         "skin": ["Сухая", "Чувствительная"],

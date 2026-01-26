@@ -1,0 +1,1 @@
+from .partner_links import goldapple_target_for_product
