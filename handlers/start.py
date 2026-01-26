@@ -1,4 +1,4 @@
-from keyboards import skin_keyboard, main_menu_keyboard
+from keyboards import main_menu_keyboard
 from storage.db import get_profile
 
 def register(bot, user_data: dict):
@@ -32,6 +32,3 @@ def register(bot, user_data: dict):
             "🏠 Главное меню",
             reply_markup=main_menu_keyboard()
         )
-
-
-

@@ -70,44 +70,6 @@ def home_keyboard():
 
 
 # ======================
-# GOLD APPLE + ADVCAKE
-# ======================
-
-def _goldapple_search_web_url(query: str) -> str:
-    """
-    Поиск в GoldApple (fallback).
-    """
-    q = urllib.parse.quote_plus(query)
-    return f"https://goldapple.ru/web?q={q}&m=1"
-
-
-def _wrap_with_advcake(target_url: str) -> str:
-    """
-    Оборачиваем любую целевую ссылку в AdvCake через dl=
-    """
-    sep = "&" if "?" in PARTNER_BASE_URL else "?"
-    return PARTNER_BASE_URL + f"{sep}dl=" + urllib.parse.quote(target_url, safe="")
-
-
-def goldapple_link(query: str | None = None, target_url: str | None = None) -> str:
-    """
-    Универсально:
-    - если передан target_url (карточка товара) -> открываем ТОЧНО товар
-    - иначе делаем поиск по query
-    """
-    if target_url:
-        # если вдруг передали относительный путь — превращаем в абсолютный
-        if target_url.startswith("/"):
-            target_url = "https://goldapple.ru" + target_url
-        return _wrap_with_advcake(target_url)
-
-    if not query:
-        raise ValueError("goldapple_link: нужен query или target_url")
-
-    return _wrap_with_advcake(_goldapple_search_web_url(query))
-
-
-# ======================
 # INLINE КЛАВИАТУРЫ
 # ======================
 
