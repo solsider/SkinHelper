@@ -4,8 +4,25 @@ from config import PARTNER_BASE_URL
 
 
 def _wrap_with_advcake(target_url: str) -> str:
-    sep = "&" if "?" in PARTNER_BASE_URL else "?"
-    return PARTNER_BASE_URL + f"{sep}dl=" + urllib.parse.quote(target_url, safe="")
+    """
+    Надёжно добавляет dl= в партнёрскую ссылку:
+    - если dl уже был в PARTNER_BASE_URL -> удаляем/перезаписываем
+    - гарантируем ровно один dl
+    """
+    base = PARTNER_BASE_URL.strip()
+
+    parts = urllib.parse.urlsplit(base)
+    qs = urllib.parse.parse_qs(parts.query, keep_blank_values=True)
+
+    # Удаляем существующий dl, если он уже был (частая причина редиректа на главную)
+    qs.pop("dl", None)
+
+    # Вставляем правильный dl (один!)
+    qs["dl"] = [target_url]
+
+    new_query = urllib.parse.urlencode(qs, doseq=True)
+    rebuilt = urllib.parse.urlunsplit((parts.scheme, parts.netloc, parts.path, new_query, parts.fragment))
+    return rebuilt
 
 
 def goldapple_card_url(ga_id: str, slug: str | None = None) -> str:
@@ -17,17 +34,12 @@ def goldapple_card_url(ga_id: str, slug: str | None = None) -> str:
 
 
 def _clean_query(name: str) -> str:
-    # убираем "(...)" — это мешает поиску
     s = re.sub(r"\([^)]*\)", "", name).strip()
     s = re.sub(r"\s{2,}", " ", s)
     return s
 
 
 def goldapple_target_for_product(p: dict) -> str:
-    """
-    1) Если есть ga_id -> точная карточка товара.
-    2) Иначе fallback: поиск по query/name.
-    """
     ga_id = p.get("ga_id")
     if ga_id:
         return _wrap_with_advcake(goldapple_card_url(ga_id, p.get("slug")))
