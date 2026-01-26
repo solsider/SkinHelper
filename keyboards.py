@@ -1,5 +1,6 @@
 import urllib.parse
 from telebot import types
+from config import PARTNER_BASE_URL
 
 SKIN_TYPES = ["Сухая", "Жирная", "Комбинированная", "Нормальная", "Чувствительная"]
 
@@ -15,7 +16,6 @@ PROBLEMS = [
 ]
 
 BUDGETS = ["низкий", "средний", "премиум"]
-
 
 def skin_keyboard():
     kb = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -48,28 +48,17 @@ def budget_keyboard():
 
 
 def goldapple_search_url(query: str) -> str:
-    q = urllib.parse.quote(query)
-    return f"https://goldapple.ru/search?text={q}"
+    q = urllib.parse.quote_plus(query)
+    target_url = f"https://goldapple.ru/web?q={q}"
 
-
-def product_link_button(url: str | None = None, query: str | None = None):
-    """
-    Если есть url — откроем его. Иначе откроем поиск по GoldApple.
-    """
-    kb = types.InlineKeyboardMarkup()
-    link = url if url else goldapple_search_url(query or "")
-    kb.add(types.InlineKeyboardButton("Открыть в Золотом Яблоке", url=link))
-    return kb
+    sep = "&" if "?" in PARTNER_BASE_URL else "?"
+    return PARTNER_BASE_URL + f"{sep}url=" + urllib.parse.quote_plus(target_url)
 
 
 def products_keyboard(products: list[dict]):
-    """
-    Inline-клавиатура из списка товаров.
-    Каждая кнопка ведёт на url или поиск.
-    """
     kb = types.InlineKeyboardMarkup()
     for p in products:
-        url = p.get("url") or goldapple_search_url(p.get("query") or p["name"])
+        url = goldapple_search_url(p.get("query") or p["name"])
         title = p["name"]
         if len(title) > 35:
             title = title[:32] + "…"
@@ -78,18 +67,9 @@ def products_keyboard(products: list[dict]):
 
 
 def step_keyboard(items: list[dict], step_index: int, total_steps: int):
-    """
-    Пошаговый режим:
-    - кнопки товаров
-    - навигация prev/next/done
-    - главное меню
-    - restart
-    """
     kb = types.InlineKeyboardMarkup()
-
-    # Кнопки товаров
     for p in items:
-        url = p.get("url") or goldapple_search_url(p.get("query") or p["name"])
+        url = goldapple_search_url(p.get("query") or p["name"])
         title = p["name"]
         if len(title) > 35:
             title = title[:32] + "…"
@@ -101,7 +81,6 @@ def step_keyboard(items: list[dict], step_index: int, total_steps: int):
 
     if step_index <= 0:
         prev_btn = types.InlineKeyboardButton("⬅️", callback_data="nav:none")
-
     if step_index >= total_steps - 1:
         next_btn = types.InlineKeyboardButton("✅ Готово", callback_data="nav:done")
 
@@ -110,6 +89,16 @@ def step_keyboard(items: list[dict], step_index: int, total_steps: int):
     kb.add(restart_btn)
     return kb
 
+
+
+def product_link_button(url: str | None = None, query: str | None = None):
+    """
+    Если есть url — откроем его. Иначе откроем поиск по GoldApple.
+    """
+    kb = types.InlineKeyboardMarkup()
+    link = url if url else goldapple_search_url(query or "")
+    kb.add(types.InlineKeyboardButton("Открыть в Золотом Яблоке", url=link))
+    return kb
 
 def profile_keyboard():
     kb = types.InlineKeyboardMarkup()
