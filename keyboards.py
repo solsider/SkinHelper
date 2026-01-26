@@ -52,29 +52,39 @@ def goldapple_search_url(query: str) -> str:
     target_url = f"https://goldapple.ru/web?q={q}"
 
     sep = "&" if "?" in PARTNER_BASE_URL else "?"
-    return PARTNER_BASE_URL + f"{sep}url=" + urllib.parse.quote_plus(target_url)
+    return PARTNER_BASE_URL + f"{sep}dl=" + urllib.parse.quote_plus(target_url)
 
 
 def products_keyboard(products: list[dict]):
     kb = types.InlineKeyboardMarkup()
     for p in products:
-        url = goldapple_search_url(p.get("query") or p["name"])
+        query = p.get("query") or p["name"]
+        url = goldapple_search_url(query)
+
         title = p["name"]
         if len(title) > 35:
             title = title[:32] + "…"
+
         kb.add(types.InlineKeyboardButton(title, url=url))
     return kb
 
 
+
 def step_keyboard(items: list[dict], step_index: int, total_steps: int):
     kb = types.InlineKeyboardMarkup()
+
+    # Кнопки товаров
     for p in items:
-        url = goldapple_search_url(p.get("query") or p["name"])
+        query = p.get("query") or p["name"]
+        url = goldapple_search_url(query)
+
         title = p["name"]
         if len(title) > 35:
             title = title[:32] + "…"
+
         kb.add(types.InlineKeyboardButton(title, url=url))
 
+    # Навигация
     prev_btn = types.InlineKeyboardButton("⬅️ Назад", callback_data="nav:prev")
     next_btn = types.InlineKeyboardButton("Дальше ➡️", callback_data="nav:next")
     restart_btn = types.InlineKeyboardButton("🔄 Начать заново", callback_data="nav:restart")
@@ -91,14 +101,11 @@ def step_keyboard(items: list[dict], step_index: int, total_steps: int):
 
 
 
-def product_link_button(url: str | None = None, query: str | None = None):
-    """
-    Если есть url — откроем его. Иначе откроем поиск по GoldApple.
-    """
+def product_link_button(query: str):
     kb = types.InlineKeyboardMarkup()
-    link = url if url else goldapple_search_url(query or "")
-    kb.add(types.InlineKeyboardButton("Открыть в Золотом Яблоке", url=link))
+    kb.add(types.InlineKeyboardButton("Открыть в Золотом Яблоке", url=goldapple_search_url(query)))
     return kb
+
 
 def profile_keyboard():
     kb = types.InlineKeyboardMarkup()
