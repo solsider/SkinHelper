@@ -47,3 +47,13 @@ def goldapple_target_for_product(p: dict) -> str:
     q = p.get("query") or _clean_query(p["name"])
     target = f"https://goldapple.ru/web?q={urllib.parse.quote_plus(q)}&m=1"
     return _wrap_with_advcake(target)
+
+
+def goldapple_search_url(query: str) -> str:
+    q = urllib.parse.quote_plus(query)
+    target = f"https://goldapple.ru/web?q={q}&m=1"
+    return _wrap_with_advcake(target)
+
+
+def product_query(p: dict) -> str:
+    return p.get("query") or _clean_query(p["name"])
