@@ -1,0 +1,36 @@
+:root {
+  --primary: #0f4cbb;
+  --primary-dark: #08368a;
+  --light: #f4f8ff;
+  --text: #1f2937;
+  --muted: #6b7280;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Inter, Arial, sans-serif; color: var(--text); background: #fff; }
+a { color: inherit; text-decoration: none; }
+header { position: sticky; top: 0; background: #fff; border-bottom: 1px solid #e5e7eb; z-index: 10; }
+.nav { max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; }
+.logo { font-weight: 700; color: var(--primary); }
+.menu { display: flex; gap: 14px; flex-wrap: wrap; font-size: 14px; }
+.menu a:hover { color: var(--primary); }
+.hero { background: linear-gradient(135deg, var(--primary), #4f8dfc); color: #fff; padding: 80px 20px; }
+.hero .inner, main { max-width: 1200px; margin: auto; }
+.hero h1 { font-size: clamp(28px, 4vw, 48px); margin-bottom: 10px; }
+.btn { display: inline-block; padding: 12px 20px; border-radius: 10px; background: var(--primary); color: #fff; border: none; cursor: pointer; transition: .25s; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(15,76,187,.25); }
+.btn.light { background: #fff; color: var(--primary); }
+section { padding: 50px 20px; }
+.grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.card { background: #fff; border-radius: 14px; padding: 18px; box-shadow: 0 6px 20px rgba(0,0,0,.08); transition: .2s; }
+.card:hover { transform: translateY(-3px); }
+.alt { background: var(--light); }
+h2 { margin-top: 0; color: var(--primary-dark); }
+footer { background: #0f172a; color: #cbd5e1; padding: 25px 20px; margin-top: 40px; }
+input, select, textarea { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; margin-bottom: 10px; }
+.table { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { border-bottom: 1px solid #e5e7eb; padding: 10px; text-align: left; }
+.notice { padding: 10px; border-radius: 8px; background: #e0ecff; color: var(--primary-dark); margin-bottom: 10px; }
+@media (max-width: 760px) { .menu { display: none; } }
+.fade { animation: fade .6s ease; }
+@keyframes fade { from {opacity: 0; transform: translateY(8px);} to {opacity:1; transform: translateY(0);} }
